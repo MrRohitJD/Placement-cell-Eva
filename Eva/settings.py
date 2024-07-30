@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-(49t-8y945y@1c@qqr0&jh$#b!smzgu$7qkk+ilrrf=qql%^&@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.01', 'localhost', 'eva-placement.onrender.com']
 
 
 # Application definition
