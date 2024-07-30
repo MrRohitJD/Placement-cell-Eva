@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-(49t-8y945y@1c@qqr0&jh$#b!smzgu$7qkk+ilrrf=qql%^&@
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False')=="true"
+# DEBUG = os.environ.get('DEBUG', 'True')=="true"
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['127.0.01', 'localhost', 'eva-placement.onrender.com']
@@ -83,13 +84,21 @@ WSGI_APPLICATION = 'Eva.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-if not DEBUG:
-    DATABASES = {
-        'default':  dj_database_url.parse(os.environ.get("DATABASE_URL"))
-    }
+# if not DEBUG:
+#     DATABASES = {
+#         'default':  dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        
+#     }
 
-else:
-    DATABASES = {
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
