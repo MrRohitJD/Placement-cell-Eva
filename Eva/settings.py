@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,17 +121,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR ,  "static"),
-]
-
-
-# For production, you should use the collectstatic command to gather all static files into STATIC_ROOT
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Define the base URL for serving media files
 MEDIA_URL = '/media/'
-
 # Specify the directory where media files are stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
