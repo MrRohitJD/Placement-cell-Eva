@@ -29,7 +29,8 @@ SECRET_KEY  = os.environ.get('SECRET_KEY', 'django-insecure-(49t-8y945y@1c@qqr0&
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True')=="true"
+DEBUG = False
+
 
 ALLOWED_HOSTS = ['127.0.01', 'localhost', 'eva-placement.onrender.com']
 
