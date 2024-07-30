@@ -18,15 +18,25 @@
     <div class="row">
 
       {% if messages %}
-      {% for message in messages  %}
-      <div class="alert mt-2 alert-{{ message.tags }} alert-dismissible fade show shadow-sm p-3 mb-2  rounded-3" role="alert">
+      {% for message in messages %}
+      <div class="alert mt-2 alert-{{ message.tags }} alert-dismissible fade show shadow-sm p-3 mb-2  rounded-3"
+        role="alert">
         <strong>Message: </strong> {{ message }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div> {% endfor %}{% endif %}
 
       <div class="container-fluid col-md-3 text-center" style="background-color:rgb(238, 238, 238); height: 960px;">
-        <img src="https://th.bing.com/th/id/OIP.wRtvON_8JKRQghdROw5QvQHaHa?rs=1&pid=ImgDetMain"
-          class="rounded-circle mx-auto d-block mt-4" alt="Rostelecom" width="170" height="170" class="me-3">
+        <div style="position: relative; ">
+          <img src="https://th.bing.com/th/id/OIP.wRtvON_8JKRQghdROw5QvQHaHa?rs=1&pid=ImgDetMain"
+            class="rounded-circle mx-auto d-block mt-4" alt="Rostelecom" width="170" height="170" class="me-3">
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; background-color: rgba(0, 0, 0, 0); padding: 10px;">
+            <label for="profileimg" class="btn btn-link">
+              <u>Choose File</u>
+              <input type="file" id="profileimg" name="profileimg" style="display: none;">
+            </label>
+          </div>
+        </div>
+
       </div>
       <div class="container-fluid col-md-9 ">
         <div class="stdPic my-4 text-center">
@@ -107,13 +117,10 @@
             <div class="my-4">
               <label for="resume">Upload Your Resume</label>
               <input type="file" id="resume" name="resume">
-            </div>
-
-
-            <div class="text-center m-5">
-              <button type="clear" class="btn btn-danger pr-5">Clear</button>
-              <button type="submit" class="btn btn-danger">Save Profile</button>
-            </div>
+              <div class="text-center m-5">
+                <button type="clear" class="btn btn-danger pr-5">Clear</button>
+                <button type="submit" class="btn btn-danger">Save Profile</button>
+              </div>
           </form>
         </div>
       </div>

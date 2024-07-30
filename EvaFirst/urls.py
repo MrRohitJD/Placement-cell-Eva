@@ -35,7 +35,7 @@ urlpatterns = [
     path('managerProfile/rec_info/', views.recruiterInfo, name='recruiterInfo'),
     path('managerProfile/applications/', views.showApplications, name='showApplications'),
     path('success/' , views.success , name='success'),
-    path('/about/' , views.about , name='about')
+    path('about/' , views.about , name='about')
     # path('recruiterProfile/', views.postJob, name='postjob')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

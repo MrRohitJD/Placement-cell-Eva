@@ -9,6 +9,28 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
+    userType = '/'
+    profile_picture_url = 'https://th.bing.com/th/id/OIP.wRtvON_8JKRQghdROw5QvQHaHa?rs=1&pid=ImgDetMain' 
+    if request.user.is_authenticated:
+        logUser = request.user.role
+        if logUser == 'student':
+            userType = '/studentProfile/'
+            # try:
+            #     student_profile = StudentProfile.objects.get(user=request.user)
+            #     if student_profile.profile_picture:
+            #         profile_picture_url = student_profile.profile_picture
+            # except StudentProfile.DoesNotExist:
+            #     pass
+
+        elif logUser == 'manager':
+            userType = '/managerProfile/'
+
+        elif logUser == 'recruiter':
+            userType ='/recruiterProfile/'
+
+        context = {'logUserType': userType, 'profile_picture_url' :profile_picture_url}
+        return render(request, 'home.html', context)
+
     return render(request, 'home.html')
 
 User = get_user_model()
@@ -70,6 +92,53 @@ def logout(request):
         return HttpResponseRedirect('/') # Redirect to home page or any other page
     return HttpResponseRedirect('/')
 
+# @role_required('student')
+# def studentProfile(request):
+#     if request.method == 'POST':
+#         firstName = request.POST.get('firstName')
+#         surname = request.POST.get('surname')
+#         mobileNumber = request.POST.get('mobileNumber')
+#         address = request.POST.get('address')
+#         university = request.POST.get('university')
+#         college = request.POST.get('college')
+#         course = request.POST.get('course')
+#         passingYear = request.POST.get('passingYear')
+#         rollNum = request.POST.get('rollNum')
+#         marks = request.POST.get('marks')
+#         skills = request.POST.get('skills')
+#         resume = request.FILES.get('resume')  # Use get() to safely access the file
+#         profileimg = request.FILES.get('profileimg')  # Use get() to safely access the file
+
+#         userr = request.user
+#         profile, created = StudentProfile.objects.get_or_create(user=userr)
+
+#         profile.studentFirstname = firstName
+#         profile.studentLastname = surname
+#         profile.student_mob = mobileNumber
+#         profile.student_rollNo = rollNum
+#         profile.student_address = address
+#         profile.std_university = university
+#         profile.std_college = college
+#         profile.latest_edu = course
+#         profile.mark = marks
+#         profile.passing_year = passingYear
+#         profile.skills = skills
+        
+#         if resume:
+#             profile.resume = resume  # Only update if a new resume is provided
+#         if profileimg:
+#             profile.profile_picture = profileimg  # Only update if a new resume is provided
+#         profile.save()
+
+#         if created:
+#             messages.success(request, "Successfully added User Information")
+#         else:
+#             messages.success(request, "Updated Your Profile")
+
+#         return redirect('studentProfile')  # Redirect to a success page or the same page
+
+#     return render(request, 'stdProf.html')
+
 @role_required('student')
 def studentProfile(request):
     if request.method == 'POST':
@@ -85,6 +154,7 @@ def studentProfile(request):
         marks = request.POST.get('marks')
         skills = request.POST.get('skills')
         resume = request.FILES.get('resume')  # Corrected: Use get() instead of ()
+        profileimg = request.FILES.get('profileimg')  # Corrected: Use get() instead of ()
 
         userr = request.user
         try:
@@ -97,11 +167,13 @@ def studentProfile(request):
             profile.std_university = university
             profile.std_college = college
             profile.latest_edu = course
-            profile.mark = marks
+            profile.mark = marks 
             profile.passing_year = passingYear
             profile.skills = skills
             if resume:
                 profile.resume = resume  # Only update if a new resume is provided
+            if profileimg:
+                profile.profile_picture = profileimg  # Only update if a new resume is provided
             messages.success(request, "Updated Your Profile" )
 
         except StudentProfile.DoesNotExist:
@@ -118,15 +190,30 @@ def studentProfile(request):
                 mark=marks,
                 passing_year=passingYear,
                 skills=skills,
-                resume=resume
+                resume=resume,
+                profile_picture = profileimg
             )
+            messages.info(request, "Successfully added User Information" )
 
         profile.save()
-        messages.info(request, "Successfully added User Information" )
-        return HttpResponseRedirect('/')
+        return redirect('studentProfile')
+    userType = '/'
+    if request.user.is_authenticated:
+        logUser = request.user.role
+
+        if logUser == 'student':
+            userType = '/studentProfile/'
+
+        elif logUser == 'manager':
+            userType = '/managerProfile/'
+
+        elif logUser == 'recruiter':
+            userType ='/recruiterProfile/'
+
+        context = {'logUserType': userType}
+        return render(request, 'stdProf.html', context)
     
     else:
-        messages.error(request, "Some error occurred!!" )
         return render(request, 'stdProf.html')
 
 @role_required('manager')
@@ -245,6 +332,7 @@ def recruiterInfo(request):
 
 
 def joblist(request):
+
     post = PostJob.objects.all()
     user = request.user.id
     print(user)
@@ -269,7 +357,21 @@ def joblist(request):
         alpInfo.save()
         return render(request, 'success.html')
     else:
-        return render(request, 'jobList.html', {'post' : post})
+            userType = '/'
+            if request.user.is_authenticated:
+                logUser = request.user.role
+                if logUser == 'student':
+                    userType = '/studentProfile/'
+
+                elif logUser == 'manager':
+                    userType = '/managerProfile/'
+
+                elif logUser == 'recruiter':
+                    userType ='/recruiterProfile/'
+
+                context = {'post' : post, 'logUserType': userType}
+                return render(request, 'jobList.html', context)
+            return render(request, 'jobList.html', {'post' : post})
 
 @role_required('manager')
 def showApplications(request):
@@ -284,3 +386,6 @@ def success(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+
