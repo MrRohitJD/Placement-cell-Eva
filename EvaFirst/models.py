@@ -40,7 +40,7 @@ class ManagerProfile(models.Model):
 
     # Add other manager-specific fields
     def __str__(self) -> str:
-        return (f"{self.manager_name}")
+        return (f"{self.manager_Firstname}")
 
 
 class RecruiterProfile(models.Model):
@@ -55,7 +55,7 @@ class RecruiterProfile(models.Model):
     company_location =  models.CharField(default="",max_length=100)
     # Add other recruiter-specific 
     def __str__(self) -> str:
-        return (f"{self.recruiter_name} ")
+        return (f"{self.recruiter_Firstname} {self.recruiter_email}")
     
 
 class omg(models.Model):

@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-(49t-8y945y@1c@qqr0&jh$#b!smzgu$7qkk+ilrrf=qql%^&@
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.01', 'localhost', 'eva-placement.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'eva-placement.onrender.com']
 
 
 # Application definition
