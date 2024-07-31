@@ -2,6 +2,7 @@
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 
 User = get_user_model()
 
@@ -13,11 +14,15 @@ class Command(BaseCommand):
         new_username = 'Rohit'  # Replace with new admin username
         new_password = 'Ass'  # Replace with new admin password
 
-        user = User.objects.get(username=old_username)
-        user.username = new_username
-        user.set_password(new_password)
-        user.save()
-        self.stdout.write(self.style.SUCCESS('Successfully updated admin credentials'))
+        try:
+            user = User.objects.get(username=old_username)
+            user.username = new_username
+            user.set_password(new_password)
+            user.save()
+            self.stdout.write(self.style.SUCCESS('Successfully updated admin credentials'))
+        except ObjectDoesNotExist:
+            self.stdout.write(self.style.ERROR(f'User with username "{old_username}" does not exist'))
+
 
         # try:
 
