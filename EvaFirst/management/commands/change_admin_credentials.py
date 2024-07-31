@@ -1,30 +1,20 @@
-# F/management/commands/change_admin_credentials.py
+
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 
 User = get_user_model()
 
 class Command(BaseCommand):
-    help = 'Change admin username and password'
+    help = 'Create a new superuser'
 
     def handle(self, *args, **kwargs):
-        old_username = 'JD'  # Replace with current admin username
-        new_username = 'Rohit'  # Replace with new admin username
-        new_password = 'Ass'  # Replace with new admin password
+        username = 'Rohit'  # Replace with the desired new username
+        password = 'Ass@.in2211'  # Replace with the desired new password
+        email = 'admin@example.com'  # Replace with the desired email
 
-        try:
-            user = User.objects.get(username=old_username)
-            user.username = new_username
-            user.set_password(new_password)
-            user.save()
-            self.stdout.write(self.style.SUCCESS('Successfully updated admin credentials'))
-        except ObjectDoesNotExist:
-            self.stdout.write(self.style.ERROR(f'User with username "{old_username}" does not exist'))
-
-
-        # try:
-
-        # except User.DoesNotExist:
-        #     self.stdout.write(self.style.ERROR('Admin user does not exist'))
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_superuser(username=username, password=password, email=email)
+            self.stdout.write(self.style.SUCCESS('Successfully created new superuser'))
+        else:
+            self.stdout.write(self.style.ERROR('Superuser with this username already exists'))
