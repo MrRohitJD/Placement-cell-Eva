@@ -9,15 +9,17 @@ class Command(BaseCommand):
     help = 'Change admin username and password'
 
     def handle(self, *args, **kwargs):
-        old_username = 'Rohit'  # Replace with current admin username
+        old_username = 'JD'  # Replace with current admin username
         new_username = 'Rohit'  # Replace with new admin username
         new_password = 'Ass'  # Replace with new admin password
 
-        try:
-            user = User.objects.get(username=old_username)
-            user.username = new_username
-            user.set_password(new_password)
-            user.save()
-            self.stdout.write(self.style.SUCCESS('Successfully updated admin credentials'))
-        except User.DoesNotExist:
-            self.stdout.write(self.style.ERROR('Admin user does not exist'))
+        user = User.objects.get(username=old_username)
+        user.username = new_username
+        user.set_password(new_password)
+        user.save()
+        self.stdout.write(self.style.SUCCESS('Successfully updated admin credentials'))
+
+        # try:
+
+        # except User.DoesNotExist:
+        #     self.stdout.write(self.style.ERROR('Admin user does not exist'))
